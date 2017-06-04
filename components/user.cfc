@@ -11,6 +11,14 @@
 		
 		<cfset local.results = structNew()>
 		<cfset local.results['error'] = "">
+		<cfset local.results['sessionExist'] = false>
+		
+		<!--- check if session exist --->
+		<cfif structKeyExists(session,'user')>
+			<cfset local.results.sessionExists = 'true'>
+			<cfset local.results['userName'] = session.user.name>
+			<cfreturn local.results>
+		</cfif>
 		
 		<!--- field validations --->
 		<cfif NOT len(trim(arguments.first_name))>
@@ -113,14 +121,19 @@
 	</cffunction>
 
 	<!----USER LOGIN ------------------>
-	<cffunction name="userLogin" returnformat="json" returntype="struct">
+	<cffunction name="userLogin" access="remote" returnformat="json" returntype="struct">
 		<cfargument name="email_id" type="string" required="true">
 		<cfargument name="password" type="string" required="true">
-		
-		<cfset local.result =  structNew()>
+
+		<cfset local.results =  structNew()>
 		<cfset local.results['error'] = "">
 		<cfset local.results['userName'] = "">
 		
+		<cfif structKeyExists(session, 'user')>
+			<cfset local.results.userName = session.user.name>
+			<cfreturn local.results>
+		</cfif>
+
 		<cftry>
 			<cfquery name="local.checkCredentials" datasource="#application.datasource#">
 				SELECT first_name,
@@ -130,22 +143,20 @@
 				WHERE email_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email_id#">
 				AND password = <cfqueryparam cfsqltype="cf_sql_varchar" value="#hash(hash(arguments.password, 'MD5'), 'MD5')#">
 			</cfquery>
-			
-			<cfif NOT len(local.checkCredentials.data)>
+
+			<cfif NOT local.checkCredentials.recordCount>
 				<cfset local.results.error = "Invalid Email Id/Password">
 				<cfreturn local.results>
 			</cfif>
 			
-			<cfset local.results.userName = #local.checkCredentials.data.first_name# &' '&#local.checkCredentials.data.last_name#>
-			<cfif not structkeyexists(session, "user")>
-				<cflock scope="session" timeout="10" type="exclusive">
-					<cfset session.user = {
-						name = local.results.userName,
-						id = local.checkCredentials.data.user_id,
-						email = local.checkCredentials.email_id
-					}/>
-				</cflock>
-			</cfif>
+			<cfset local.results.userName = #local.checkCredentials.first_name# &' '&#local.checkCredentials.last_name#>
+			<cflock scope="session" timeout="10" type="exclusive">
+				<cfset session.user = {
+					name = local.results.userName,
+					id = local.checkCredentials.user_id,
+					email = arguments.email_id
+				}/>
+			</cflock>
 		<cfcatch>
 			
 			<!--- error log --->
@@ -159,12 +170,15 @@
 	</cffunction>
 
 	<!---- USER LOGOUT ------------------>
-	<cffunction name="userLogout" returnformat="json" returntype="struct">
+	<cffunction name="userLogout" access="remote" returnformat="json" returntype="struct">
 
 		<!--- Set local variables --->
 		<cfset local.results = structNew()>
 		<cfset local.results['error'] = "">
-		
+		<cfif NOT structKeyExists(session, 'user')>
+			<cfset local.results.error = "invalid requiest.">
+			<cfreturn local.results>
+		</cfif>
 		<cftry>
 			<cflock scope="session" timeout="10" type="exclusive">
 	

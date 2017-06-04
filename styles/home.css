@@ -1,8 +1,8 @@
 body{
 	background-color: #f1f1f1;
 }
-.container{
-	padding: 5% 25%;
+.form-box{
+	margin: 5% 25%;
 }
 .wrapper{
 	border-bottom-left-radius: 0.5em;
@@ -24,4 +24,15 @@ body{
 .alert{
 	width: 40% !important;
 	float: right !important;
+}
+
+.greet{
+	padding-left: 5%;
+	float:left;
+	font-weight: bold;
+}
+#logout{
+	padding-right: 5%;
+	float:right;
+	cursor: pointer;
 }

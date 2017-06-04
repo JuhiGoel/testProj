@@ -1,3 +1,4 @@
+
 function showAlert(type, message){
 	var alert = $('<div class="alert alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>');
 	alert.addClass('alert-'+ type);
@@ -6,7 +7,28 @@ function showAlert(type, message){
 	setTimeout(function(){alert.remove();},3000);
 }
 
+function showHomePage(name){
+	var name = name ||'';
+	var home =  $('.home-header');
+	$('.form-box').addClass('hide');
+	home.removeClass('hide');
+	home.append('<span id="logout"><i class="fa fa-sign-out"></i>Logout</span><h1 class="greet">Hello! ' + name +'</h1>')
+	return;
+
+}
+
+function showForm(){
+
+	var home =  $('.home-header');
+	home.addClass('hide').html('');
+	
+	$('.form-box').removeClass('hide');
+	return;
+
+}
+
 $(document).ready(function(){
+
 	function validate(){	
 		$('.form-horizontal').bootstrapValidator({
 			feedbackIcons: {
@@ -135,7 +157,10 @@ $(document)
 			dataType : 'json',
 			data : form_data,
 			success : function(result) {
-			
+				
+				if(result.sessionExist){
+					showHomePage(result.userName);
+				}
 				form.data('bootstrapValidator').resetForm();
 				form[0].reset();
 				if(result.error.length){
@@ -169,7 +194,7 @@ $(document)
 			password : $('#login_password').val()	
 		}
 		$.ajax({
-			url : '/components/user.cfc?method=loginUser',
+			url : '/components/user.cfc?method=userLogin',
 			type : 'POST',
 			dataType : 'json',
 			data : user_detail,
@@ -182,9 +207,9 @@ $(document)
 					form.data('bootstrapValidator').resetForm();
 					return false;
 				}
-				showAlert('success','You have successfully logged in.');
+				
 				//change page
-				formObject = $('.wrapper').detach();
+				showHomePage(result.userName);
 			
 			},
 			failure :  function(data){
@@ -195,11 +220,11 @@ $(document)
 		});
 	})	
 
-	.on('click','#btn_logout', function(e){
+	.on('click','#logout', function(e){
 
 		e.preventDefault();
 		$.ajax({
-			url : '/components/user.cfc?method=logoutUser',
+			url : '/components/user.cfc?method=userLogout',
 			type : 'GET',
 			dataType : 'json',
 			success : function(result) {
@@ -208,7 +233,9 @@ $(document)
 					showAlert('danger',result.error);
 					return false;
 				}
-				showAlert('sucess','You have successfully logged in.');
+				showForm();
+				showAlert('success','You have successfully logged out.');
+				
 			
 			},
 			failure :  function(data){
@@ -217,17 +244,7 @@ $(document)
 			
 			}
 		})
-		
-		.on( 'status.field.bv', '#form_login', function( e, data ) {
 
-			var $this = $(this);
-			var formIsValid = true;
-
-			$( '.form-group', $this ).each( function() {
-				formIsValid = formIsValid && $( this ).hasClass( 'has-success' );
-			});
-			$('.submit-button', $this ).attr( 'disabled', !formIsValid );
-
-		});
 	});
+
 
