@@ -1,20 +1,31 @@
-<cfcomponent displayname="MyApp" output="false" hint="Handle the application.">
+<cfcomponent displayname="CFML_login" output="false" hint="Handle the application.">
 
-	<!--- Configure Application ------------------------------------>
+	<!--- Configure Application ----------------------------------->
 	<cfset this.name = "MyApp">
 	<cfset this.applicationTimeout = createTimeSpan( 0, 0, 1, 0 )>
 	<cfset this.sessionManagement = true>
 	<cfset this.setClientCookies = true>
-	<cfset this.sessionTimeout = createTimeSpan( 0, 8, 0, 0 )>
+	<cfset this.sessionTimeout = createTimeSpan( 0, 0, 30, 0 )>
 	<cfsetting requesttimeout="60" showdebugoutput="false" enablecfoutputonly="false">
 	
-	<!--- Application start --------------------------------------------------->
+	<!--- Application start --------------------------------------->
 	<cffunction name="onApplicationStart" access="public" returntype="boolean" output="false" hint="Fires when the application is first created.">
 		<cfset application.dataSource = "cfml_login">
 		<cfset application.objErrorLog = createObject("component", "components.error-log")>
 		<cfreturn true>
 	</cffunction>
 
+	<!--- Session  Start ------------------------------------------>
+	<cffunction name="onSessionStart" access="public" returntype="void" hint="Fires when a session is created.">
+		<cfset sessionRotate()/>
+		<cfreturn>
+	</cffunction>
+	
+	<!--- Session  End ------------------------------------------>
+	<cffunction name="onSessionEnd" access="public" returntype="void" hint="Fires when a session ends.">
+		<cfset sessionInvalidate()/>
+		<cfreturn>
+	</cffunction>
 
 	<!--- Error --------------------------------------------------->
 	<cffunction name="onError" access="public" returntype="void" output="true" hint="Fires when an exception occurs that is not caught by a try/catch.">

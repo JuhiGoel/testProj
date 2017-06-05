@@ -1,4 +1,5 @@
 
+//function for showing user friendly message to user
 function showAlert(type, message){
 	var alert = $('<div class="alert alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>');
 	alert.addClass('alert-'+ type);
@@ -7,6 +8,109 @@ function showAlert(type, message){
 	setTimeout(function(){alert.remove();},3000);
 }
 
+//show login/register form
+function showForm(){
+	debugger;
+	var form =  createForm();
+	$('.container').html(form);
+	validate('form-horizontal');
+
+	return;
+}
+
+//create login/register form
+function createForm(){
+	var form = '<div class = "form-box">' +
+	'				<ul class="nav nav-pills">'+
+	'					<li id="tab_register" class="active"><a>Register</a></li>' +
+	'					<li id="tab_login"><a>Login</a></li>' +
+	'				</ul>' +
+	'				<div class="wrapper">' +
+	'					<form class="form-horizontal" method="post" action="#" id="form_register">' +
+	'						<div class="form-group">' +
+	'							<div class="cols-sm-10">' +
+	'								<div class="input-group">' +
+	'									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>' +
+	'									<input type="text" class="form-control" name="first_name" id="first_name"  placeholder="First Name*"/>' +
+	'								</div>' +
+	'							</div>' +
+	'						</div>' +
+	'						<div class="form-group">' +
+	'							<div class="cols-sm-10">' +
+	'								<div class="input-group">' +
+	'									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>' +
+	'									<input type="text" class="form-control" name="last_name" id="last_name"  placeholder="Last Name"/>' +
+	'								</div>' +
+	'							</div>' +
+	'						</div>' +
+	'						<div class="form-group">' +
+	'							<div class="cols-sm-10">' +
+	'								<div class="input-group">' +
+	'									<span class="input-group-addon"><i class="fa fa-mobile" aria-hidden="true"></i></span>' +
+	'									<input type="text" class="form-control" name="phone_number" id="phone_number"  placeholder="Phone Number"/>' +
+	'								</div>' +
+	'							</div>' +
+	'						</div>' +
+	'						<div class="form-group">' +
+	'							<div class="cols-sm-10">' +
+	'								<div class="input-group">' +
+	'									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>' +
+	'									<input type="text" class="form-control" name="email_id" id="email_id"  placeholder="Email Id*"/>' +
+	'								</div>' +
+	'							</div>' +
+	'						</div>' +
+	'						<div class="form-group">' +
+	'							<div class="cols-sm-10">' +
+	'								<div class="input-group">' +
+	'									<span class="input-group-addon"><i class="fa fa-eye" aria-hidden="true"></i></span>' +
+	'									<input type="password" class="form-control" name="password" id="password"  placeholder="Password*"/>' +
+	'								</div>' +
+	'							</div>' +
+	'						</div>' +
+	'						<div class="form-group">' +
+	'							<div class="cols-sm-10">' +
+	'								<div class="input-group">' +
+	'									<span class="input-group-addon"><i class="fa fa-eye" aria-hidden="true"></i></span>' +
+	'									<input type="password" class="form-control" name="confirm_password" id="confirm_password"  placeholder="Confirm Password*"/>' +
+	'								</div>' +
+	'							</div>' +
+	'						</div>' +
+	'						<div class="form-group ">' +
+	'							<button id="btn_register" class="btn btn-primary btn-lg btn-block submit-btn">' +
+	'								Register' +
+	'							</button>' +
+	'						</div>' +
+	'								' +
+	'					</form>' +
+	'					<form class="form-horizontal hide" method="post" action="#" id="form_login">' +
+	'						<div class="form-group">' +
+	'							<div class="cols-sm-10">' +
+	'								<div class="input-group">' +
+	'									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>' +
+	'									<input type="text" class="form-control" name="email_id" id="user_email"  placeholder="Email Id*"/>' +
+	'								</div>' +
+	'							</div>' +
+	'						</div>' +
+	'						<div class="form-group">' +
+	'							<div class="cols-sm-10">' +
+	'								<div class="input-group">' +
+	'									<span class="input-group-addon"><i class="fa fa-eye" aria-hidden="true"></i></span>' +
+	'									<input type="password" class="form-control" name="password" id="login_password"  placeholder="Password"/>' +
+	'								</div>' +
+	'							</div>' +
+	'						</div>' +
+	'						<div class="form-group ">' +
+	'							<button id="btn_login" class="btn btn-primary btn-lg btn-block submit-btn">' +
+	'								Login' +
+	'							</button>' +
+	'						</div>' +
+	'					</form>' +
+	'				</div>' +
+	'			</div>';
+	return form;
+}
+
+//display home page(page after login)
 function showHomePage(name){
 	var name = name ||'';
 	var home =  $('<div class="home-header"></div>');
@@ -17,6 +121,7 @@ function showHomePage(name){
 
 }
 
+//function for initializing bootstrap validation
 function validate(id){	
 	$('.'+id).bootstrapValidator({
 		feedbackIcons: {
@@ -96,105 +201,7 @@ function validate(id){
 
 }
 
-function showForm(){
-	debugger;
-	var form =  createForm();
-	$('.container').html(form);
-	validate('form-horizontal');
-
-	return;
-}
-function createForm(){
-	var form = '<div class = "form-box">' +
-			'				<ul class="nav nav-pills">'+
-			'					<li id="tab_register" class="active"><a>Register</a></li>' +
-			'					<li id="tab_login"><a>Login</a></li>' +
-			'				</ul>' +
-			'				<div class="wrapper">' +
-			'					<form class="form-horizontal" method="post" action="#" id="form_register">' +
-			'						<div class="form-group">' +
-			'							<div class="cols-sm-10">' +
-			'								<div class="input-group">' +
-			'									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>' +
-			'									<input type="text" class="form-control" name="first_name" id="first_name"  placeholder="First Name*"/>' +
-			'								</div>' +
-			'							</div>' +
-			'						</div>' +
-			'						<div class="form-group">' +
-			'							<div class="cols-sm-10">' +
-			'								<div class="input-group">' +
-			'									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>' +
-			'									<input type="text" class="form-control" name="last_name" id="last_name"  placeholder="Last Name"/>' +
-			'								</div>' +
-			'							</div>' +
-			'						</div>' +
-			'						<div class="form-group">' +
-			'							<div class="cols-sm-10">' +
-			'								<div class="input-group">' +
-			'									<span class="input-group-addon"><i class="fa fa-mobile" aria-hidden="true"></i></span>' +
-			'									<input type="text" class="form-control" name="phone_number" id="phone_number"  placeholder="Phone Number"/>' +
-			'								</div>' +
-			'							</div>' +
-			'						</div>' +
-			'						<div class="form-group">' +
-			'							<div class="cols-sm-10">' +
-			'								<div class="input-group">' +
-			'									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>' +
-			'									<input type="text" class="form-control" name="email_id" id="email_id"  placeholder="Email Id*"/>' +
-			'								</div>' +
-			'							</div>' +
-			'						</div>' +
-			'						<div class="form-group">' +
-			'							<div class="cols-sm-10">' +
-			'								<div class="input-group">' +
-			'									<span class="input-group-addon"><i class="fa fa-eye" aria-hidden="true"></i></span>' +
-			'									<input type="password" class="form-control" name="password" id="password"  placeholder="Password*"/>' +
-			'								</div>' +
-			'							</div>' +
-			'						</div>' +
-			'						<div class="form-group">' +
-			'							<div class="cols-sm-10">' +
-			'								<div class="input-group">' +
-			'									<span class="input-group-addon"><i class="fa fa-eye" aria-hidden="true"></i></span>' +
-			'									<input type="password" class="form-control" name="confirm_password" id="confirm_password"  placeholder="Confirm Password*"/>' +
-			'								</div>' +
-			'							</div>' +
-			'						</div>' +
-			'						<div class="form-group ">' +
-			'							<button id="btn_register" class="btn btn-primary btn-lg btn-block submit-btn">' +
-			'								Register' +
-			'							</button>' +
-			'						</div>' +
-			'								' +
-			'					</form>' +
-			'					<form class="form-horizontal hide" method="post" action="#" id="form_login">' +
-			'						<div class="form-group">' +
-			'							<div class="cols-sm-10">' +
-			'								<div class="input-group">' +
-			'									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>' +
-			'									<input type="text" class="form-control" name="email_id" id="user_email"  placeholder="Email Id*"/>' +
-			'								</div>' +
-			'							</div>' +
-			'						</div>' +
-			'						<div class="form-group">' +
-			'							<div class="cols-sm-10">' +
-			'								<div class="input-group">' +
-			'									<span class="input-group-addon"><i class="fa fa-eye" aria-hidden="true"></i></span>' +
-			'									<input type="password" class="form-control" name="password" id="login_password"  placeholder="Password"/>' +
-			'								</div>' +
-			'							</div>' +
-			'						</div>' +
-			'						<div class="form-group ">' +
-			'							<button id="btn_login" class="btn btn-primary btn-lg btn-block submit-btn">' +
-			'								Login' +
-			'							</button>' +
-			'						</div>' +
-			'					</form>' +
-			'				</div>' +
-			'			</div>';
-	return form;
-}
-
+//initialize form validation
 $(document).ready(function(){
 
 	if($('.form-horizontal').length){
@@ -203,26 +210,39 @@ $(document).ready(function(){
 
 });
 
+
 $(document)
 
+	//show registration form 
 	.on('click', '#tab_register', function(){
+		
+		var register = $('#form_register');
+		var login = $('#form_login');
+		
 		$('#tab_login').removeClass('active');
 		$(this).addClass('active');
-		$('#form_login').data('bootstrapValidator').resetForm();
-		$('#form_register')[0].reset();
-		$('#form_register').removeClass('hide');
-		$('#form_login').addClass('hide');
+		login.data('bootstrapValidator').resetForm();
+		register[0].reset();
+		register.removeClass('hide');
+		login.addClass('hide');
 	})
+	
+	//show login form
 	.on('click', '#tab_login', function(){
+		
+		var register = $('#form_register');
+		var login = $('#form_login');
+		
 		$(this).addClass('active');
-		$('#form_register').data('bootstrapValidator').resetForm();
+		register.data('bootstrapValidator').resetForm();
 		$('#tab_register').removeClass('active');
-		$('#form_register').addClass('hide');
-		$('#form_login')[0].reset();	
-		$('#form_login').removeClass('hide');
+		register.addClass('hide');
+		login[0].reset();	
+		login.removeClass('hide');
 
 	})
 
+	//execute when user register
 	.on('click','#btn_register', function(e){
 
 		e.preventDefault();
@@ -270,6 +290,7 @@ $(document)
 		
 	})
 
+	//execute when user log in.
 	.on('click','#btn_login', function(e){
 
 		e.preventDefault();
@@ -310,6 +331,7 @@ $(document)
 		});
 	})	
 
+	// execute when user logout
 	.on('click','#logout', function(e){
 
 		e.preventDefault();

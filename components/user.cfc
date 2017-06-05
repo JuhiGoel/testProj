@@ -150,6 +150,7 @@
 			</cfif>
 			
 			<cfset local.results.userName = #local.checkCredentials.first_name# &' '&#local.checkCredentials.last_name#>
+
 			<cflock scope="session" timeout="10" type="exclusive">
 				<cfset session.user = {
 					name = local.results.userName,
@@ -183,7 +184,6 @@
 			<cflock scope="session" timeout="10" type="exclusive">
 	
 				<!--- Delete User Session --->
-				<cflogout>
 				<cfset structDelete(session,'user')>
 			</cflock>
 		<cfcatch>

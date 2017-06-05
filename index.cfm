@@ -27,6 +27,7 @@
 					</ul>
 					<div class="wrapper">
 						
+						<!--- registration form --->
 						<form class="form-horizontal" method="post" action="#" id="form_register">
 										
 							<div class="form-group">
@@ -86,6 +87,8 @@
 							</div>
 									
 						</form>
+						
+						<!--- login form --->
 						<form class="form-horizontal hide" method="post" action="#" id="form_login">
 	
 							<div class="form-group">
