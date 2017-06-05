@@ -18,9 +18,7 @@
 		<div class="container">
 			<cfif structKeyExists(session, 'user')>
 				<div class="home-header"><span id="logout"><i class="fa fa-sign-out"></i>Logout</span><h1 class="greet">Hello! <cfoutput> #session.user.name#</cfoutput></h1></div>
-				<div class = "form-box hide">
 			<cfelse>
-				<div class="home-header hide"></div>
 				<div class = "form-box">
 				
 					<ul class="nav nav-pills">							
@@ -112,7 +110,7 @@
 									Login
 								</button>
 							</div>
-									
+	
 						</form>
 					</div>
 				</div>

@@ -130,7 +130,7 @@
 		<cfset local.results['userName'] = "">
 		
 		<cfif structKeyExists(session, 'user')>
-			<cfset local.results.userName = session.user.name>
+			<cfset local.result.error = "Invalid request.">
 			<cfreturn local.results>
 		</cfif>
 
